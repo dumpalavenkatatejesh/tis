@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f7f4ee;
+  --paper-2: #efe6d6;
+  --ink: #14241c;
+  --muted: #5a675f;
+  --forest: #166534;
+  --saffron: #c2410c;
+  --ember: #c2410c;
+  --on-ember: #fffaf6;
+  --line: rgb(20 36 28 / 14%);
+  --card: #fffdf8;
+  --danger: #9f1239;
+  --saffron-bright: #f4a15a;
+  --scrim: #102019;
+}
+
+html.dark {
+  --paper: #101915;
+  --paper-2: #18241e;
+  --ink: #f6f1e7;
+  --muted: #b7c2ba;
+  --forest: #9dceba;
+  --saffron: #f4a15a;
+  --ember: #f0a15c;
+  --on-ember: #1c120c;
+  --line: rgb(246 241 231 / 16%);
+  --card: #18241e;
+  --danger: #fb7185;
+  --saffron-bright: #f4a15a;
+  --scrim: #102019;
+}
+
+@theme inline {
+  --font-display: "Fraunces", "Iowan Old Style", Palatino, serif;
+  --font-sans: "Manrope", "Segoe UI", sans-serif;
+
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-forest: var(--forest);
+  --color-saffron: var(--saffron);
+  --color-ember: var(--ember);
+  --color-on-ember: var(--on-ember);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-danger: var(--danger);
+  --color-saffron-bright: var(--saffron-bright);
+  --color-scrim: var(--scrim);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--paper);
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html.dark body::before {
+  opacity: 0.07;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--saffron) 32%, transparent);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--saffron);
+  outline-offset: 3px;
+}
+
+.theme-surface {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease;
+}
+
+.glow {
+  background: color-mix(in srgb, var(--saffron) 24%, transparent);
+}
+
+.nav-solid {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+html[data-cursor="on"] a,
+html[data-cursor="on"] button,
+html[data-cursor="on"] summary,
+html[data-cursor="on"] [data-cursor="grow"] {
+  cursor: none;
+}
+
+html[data-cursor="on"] input,
+html[data-cursor="on"] textarea,
+html[data-cursor="on"] select {
+  cursor: text;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 999px;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  background: var(--saffron);
+  box-shadow: 0 0 0 2px var(--paper);
+}
+
+.cursor-ring {
+  width: 46px;
+  height: 46px;
+  opacity: 0;
+  border: 1.5px solid var(--ink);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--paper) 85%, transparent);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cursor-ring.is-hot {
+  border-color: var(--saffron);
+  background: color-mix(in srgb, var(--saffron) 18%, transparent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--saffron) 16%, transparent);
+}
+
+@keyframes tis-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: tis-marquee 46s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee {
+    overflow: visible;
+    mask-image: none;
+  }
+  .marquee-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.75rem;
+  }
+  .marquee-track ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
